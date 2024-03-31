@@ -1,3 +1,4 @@
+
 * {
   margin: 0;
   padding: 0;
@@ -214,9 +215,10 @@ input {
   justify-content: center;
   gap: 1em;
 }
+
 .checkboxinput{
   text-align: center;
-  width: 3vw;
+  width: 25px;
   display: flex;
   flex-wrap: nowrap;
   gap: 1.8em;
@@ -228,7 +230,7 @@ input {
 
 .checkboxlabel{
   vertical-align: middle ;
-  text-align: center;
+  text-align: start;
   display: block;
   margin-bottom: 0.5em;
   font-weight: 500;
