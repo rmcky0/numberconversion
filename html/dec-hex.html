@@ -7,8 +7,6 @@
     <link rel='stylesheet' href='https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&amp;display=swap'>
-
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="../css/style.css" />
   </head>
 <body>
@@ -72,6 +70,30 @@
       </div>
     </div>
     <p id="error-msg"></p>
+    <div class="checkboxwrapper" style="gap: 5em;">
+      <div class="wrapper" >
+        <input class="checkboxinput" type="checkbox" id="bin-checkbox" />
+        <label for="bin-checkbox" class="checkboxlabel">Convert to Binary</label>
+      </div>
+      <div class="wrapper">
+        <input class="checkboxinput" type="checkbox" id="oct-checkbox" />
+        <label for="oct-checkbox" class="checkboxlabel">Convert to Octal</label>
+      </div>
+    </div>
+    <br>
+    <div class="wrapper">
+      <div style="width: 100%;">
+          <label for="bin-inp">Binary:</label>
+          <input type="text" id="bin-inp" readonly />
+      </div>
+    </div>
+    <br>
+    <div class="wrapper">
+      <div style="width: 100%;">
+          <label for="oct-inp">Octal:</label>
+          <input type="text" id="oct-inp" readonly />
+      </div>
+    </div>
 </div>
     <script src="../javascript/maincode.js"></script>
     <script src="../javascript/dec2hex.js"></script>
