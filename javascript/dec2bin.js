@@ -10,30 +10,16 @@ const octalInp = document.getElementById("oct-inp");
 const hexInp = document.getElementById("hex-inp");
 
 // Hide octal and hexadecimal inputs initially
-octalInp.style.display = "none";
-octalInp.previousElementSibling.style.display = "none";
-hexInp.style.display = "none";
-hexInp.previousElementSibling.style.display = "none";
+octalInp.parentElement.style.display = "none";
+hexInp.parentElement.style.display = "none";
 
 // Function to handle checkbox change events
 function handleCheckboxChange() {
   // Show/hide octal input based on octal checkbox state
-  if (octCheckbox.checked) {
-    octalInp.style.display = "block";
-    octalInp.previousElementSibling.style.display = "block";
-  } else {
-    octalInp.style.display = "none";
-    octalInp.previousElementSibling.style.display = "none";
-  }
+  octalInp.parentElement.style.display = octCheckbox.checked ? "block" : "none";
 
   // Show/hide hexadecimal input based on hexadecimal checkbox state
-  if (hexCheckbox.checked) {
-    hexInp.style.display = "block";
-    hexInp.previousElementSibling.style.display = "block";
-  } else {
-    hexInp.style.display = "none";
-    hexInp.previousElementSibling.style.display = "none";
-  }
+  hexInp.parentElement.style.display = hexCheckbox.checked ? "block" : "none";
 }
 
 // Listen for changes in the octal checkbox state
@@ -60,6 +46,22 @@ decInp.addEventListener("input", () => {
   }
 });
 
+// Convert binary to decimal when user inputs in the binary field
+binInp.addEventListener("input", () => {
+  let binValue = binInp.value;
+  if (binValidator(binValue)) {
+    decInp.value = parseInt(binValue, 2);
+    errorMsg.textContent = "";
+  } else {
+    decInp.value = "";
+    errorMsg.textContent = "Please Enter A Valid Binary Input";
+  }
+  // Compute the 2's complement and update other fields
+  complementInp.value = computeTwosComplement(binInp.value);
+  octalInp.value = parseInt(binInp.value, 2).toString(8);
+  hexInp.value = parseInt(binInp.value, 2).toString(16).toUpperCase();
+});
+
 // Function to compute the 2's complement
 function computeTwosComplement(binary) {
   let complement = "";
@@ -83,7 +85,11 @@ function computeTwosComplement(binary) {
   return complement;
 }
 
-// Function to format binary input
+// Function to validate binary input
+function binValidator(num) {
+  return /^[0-1]+$/.test(num);
+}
+
 function formatBinaryInput() {
   let binaryValue = binInp.value.replace(/\s/g, ''); // Remove existing spaces
   let complementValue = complementInp.value.replace(/\s/g, ''); // Remove existing spaces
