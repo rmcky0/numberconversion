@@ -9,7 +9,7 @@ const hexCheckbox = document.getElementById("hex-checkbox");
 const octalInp = document.getElementById("oct-inp");
 const hexInp = document.getElementById("hex-inp");
 
-
+// Hide octal and hexadecimal inputs initially
 octalInp.style.display = "none";
 octalInp.previousElementSibling.style.display = "none";
 hexInp.style.display = "none";
@@ -17,7 +17,7 @@ hexInp.previousElementSibling.style.display = "none";
 
 // Function to handle checkbox change events
 function handleCheckboxChange() {
-  // Show/hide octal input and label based on octal checkbox state
+  // Show/hide octal input based on octal checkbox state
   if (octCheckbox.checked) {
     octalInp.style.display = "block";
     octalInp.previousElementSibling.style.display = "block";
@@ -26,7 +26,7 @@ function handleCheckboxChange() {
     octalInp.previousElementSibling.style.display = "none";
   }
 
-  // Show/hide hexadecimal input and label based on hexadecimal checkbox state
+  // Show/hide hexadecimal input based on hexadecimal checkbox state
   if (hexCheckbox.checked) {
     hexInp.style.display = "block";
     hexInp.previousElementSibling.style.display = "block";
@@ -36,14 +36,29 @@ function handleCheckboxChange() {
   }
 }
 
-// Listen for changes in the grouping checkbox state
-groupingCheckbox.addEventListener("change", formatBinaryInput);
-
 // Listen for changes in the octal checkbox state
 octCheckbox.addEventListener("change", handleCheckboxChange);
 
 // Listen for changes in the hexadecimal checkbox state
 hexCheckbox.addEventListener("change", handleCheckboxChange);
+
+// Convert decimal to binary when user inputs in the decimal field
+decInp.addEventListener("input", () => {
+  let decValue = parseInt(decInp.value);
+  if (!isNaN(decValue)) {
+    binInp.value = decValue.toString(2);
+    complementInp.value = computeTwosComplement(binInp.value);
+    octalInp.value = decValue.toString(8);
+    hexInp.value = decValue.toString(16).toUpperCase();
+    errorMsg.textContent = "";
+  } else {
+    binInp.value = "";
+    complementInp.value = "";
+    octalInp.value = "";
+    hexInp.value = "";
+    errorMsg.textContent = "Please Enter A Valid Decimal Input";
+  }
+});
 
 // Function to compute the 2's complement
 function computeTwosComplement(binary) {
@@ -68,90 +83,6 @@ function computeTwosComplement(binary) {
   return complement;
 }
 
-// Convert decimal to binary when user inputs in the decimal field
-decInp.addEventListener("input", () => {
-  let decValue = parseInt(decInp.value);
-  binInp.value = decValue.toString(2);
-  formatBinaryInput();
-  // Compute and display the 2's complement
-  complementInp.value = computeTwosComplement(binInp.value);
-  
-  // Convert decimal to octal
-  if (octCheckbox.checked) {
-    octalInp.value = decValue.toString(8);
-  }
-});
-
-// Convert binary to decimal when user inputs in the binary field
-binInp.addEventListener("input", () => {
-  let binValue = binInp.value;
-  if (binValidator(binValue)) {
-    decInp.value = parseInt(binValue, 2);
-    errorMsg.textContent = "";
-  } else {
-    errorMsg.textContent = "Please Enter A Valid Binary Input";
-  }
-  // Compute the 2's complement
-  let complementValue = computeTwosComplement(binValue);
-  complementInp.value = complementValue;
-  // Format both binary and 2's complement inputs
-  formatBinaryInput();
-  
-  // Convert binary to octal
-  if (octCheckbox.checked) {
-    octalInp.value = parseInt(binValue, 2).toString(8);
-  }
-});
-
-// Listen for changes in the grouping checkbox state
-groupingCheckbox.addEventListener("change", formatBinaryInput);
-
-// Function to check if the binary number is valid
-function binValidator(num) {
-  for (let i = 0; i < num.length; i++) {
-    if (num[i] != "0" && num[i] != "1") {
-      return false;
-    }
-  }
-  return true;
-}
-
-// Convert decimal to hexadecimal when user inputs in the decimal field
-decInp.addEventListener("input", () => {
-  let decValue = parseInt(decInp.value);
-  if (!isNaN(decValue)) {
-    hexInp.value = decValue.toString(16).toUpperCase();
-    errorMsg.textContent = "";
-  } else {
-    hexInp.value = "";
-    errorMsg.textContent = "Please Enter A Valid Decimal Input";
-  }
-});
-
-// Convert hexadecimal to decimal when user inputs in the hexadecimal field
-hexInp.addEventListener("input", () => {
-  let hexValue = hexInp.value.toUpperCase();
-
-  if (hexValidator(hexValue)) {
-    let decValue = parseInt(hexValue, 16);
-    if (!isNaN(decValue)) {
-      decInp.value = decValue;
-      errorMsg.textContent = "";
-    } else {
-      decInp.value = "";
-      errorMsg.textContent = "Invalid hexadecimal input";
-    }
-  } else {
-    decInp.value = "";
-    errorMsg.textContent = "Please Enter A Valid Hexadecimal Input";
-  }
-});
-
-// Function to validate hexadecimal input
-function hexValidator(num) {
-  return /^[0-9A-F]+$/i.test(num);
-}
-
 // Function to format binary input
 function formatBinaryInput() {
   let binaryValue = binInp.value.replace(/\s/g, ''); // Remove existing spaces
@@ -164,3 +95,6 @@ function formatBinaryInput() {
   binInp.value = binaryValue;
   complementInp.value = complementValue;
 }
+
+// Listen for changes in the grouping checkbox state
+groupingCheckbox.addEventListener("change", formatBinaryInput);
