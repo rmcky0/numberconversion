@@ -24,6 +24,7 @@ function handleCheckboxChange() {
   } else {
     octalInp.style.display = "none";
     octalInp.previousElementSibling.style.display = "none";
+    octalInp.value = "";
   }
 
   // Show/hide hexadecimal input based on hexadecimal checkbox state
@@ -33,32 +34,21 @@ function handleCheckboxChange() {
   } else {
     hexInp.style.display = "none";
     hexInp.previousElementSibling.style.display = "none";
+    hexInp.value = "";
   }
 }
 
-// Listen for changes in the octal checkbox state
-octCheckbox.addEventListener("change", handleCheckboxChange);
-
-// Listen for changes in the hexadecimal checkbox state
-hexCheckbox.addEventListener("change", handleCheckboxChange);
-
-// Convert decimal to binary when user inputs in the decimal field
-decInp.addEventListener("input", () => {
+// Function to convert decimal to binary
+function convertDecimalToBinary() {
   let decValue = parseInt(decInp.value);
   if (!isNaN(decValue)) {
     binInp.value = decValue.toString(2);
     complementInp.value = computeTwosComplement(binInp.value);
-    octalInp.value = decValue.toString(8);
-    hexInp.value = decValue.toString(16).toUpperCase();
-    errorMsg.textContent = "";
   } else {
     binInp.value = "";
     complementInp.value = "";
-    octalInp.value = "";
-    hexInp.value = "";
-    errorMsg.textContent = "Please Enter A Valid Decimal Input";
   }
-});
+}
 
 // Function to compute the 2's complement
 function computeTwosComplement(binary) {
@@ -83,6 +73,38 @@ function computeTwosComplement(binary) {
   return complement;
 }
 
+// Listen for changes in the octal checkbox state
+octCheckbox.addEventListener("change", handleCheckboxChange);
+
+// Listen for changes in the hexadecimal checkbox state
+hexCheckbox.addEventListener("change", handleCheckboxChange);
+
+// Trigger checkbox change initially
+handleCheckboxChange();
+
+// Convert decimal to binary when user inputs in the decimal field
+decInp.addEventListener("input", () => {
+  convertDecimalToBinary();
+  // Convert decimal to octal
+  if (octCheckbox.checked) {
+    let decValue = parseInt(decInp.value);
+    if (!isNaN(decValue)) {
+      octalInp.value = decValue.toString(8);
+    } else {
+      octalInp.value = "";
+    }
+  }
+  // Convert decimal to hexadecimal
+  if (hexCheckbox.checked) {
+    let decValue = parseInt(decInp.value);
+    if (!isNaN(decValue)) {
+      hexInp.value = decValue.toString(16).toUpperCase();
+    } else {
+      hexInp.value = "";
+    }
+  }
+});
+
 // Function to format binary input
 function formatBinaryInput() {
   let binaryValue = binInp.value.replace(/\s/g, ''); // Remove existing spaces
@@ -95,6 +117,3 @@ function formatBinaryInput() {
   binInp.value = binaryValue;
   complementInp.value = complementValue;
 }
-
-// Listen for changes in the grouping checkbox state
-groupingCheckbox.addEventListener("change", formatBinaryInput);
