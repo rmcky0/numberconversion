@@ -7,8 +7,6 @@
     <link rel='stylesheet' href='https://pro.fontawesome.com/releases/v6.0.0-beta3/css/all.css'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&amp;display=swap'>
-
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="../css/style.css" />
   </head>
 <body>
@@ -31,7 +29,7 @@
       <div class="menu">
         <ul class="menu-links">
           <li class="nav-link">
-            <a href="../index.html">
+            <a href="index.html">
               <i class="material-symbols-outlined icon">home</i>
               <span class="text nav-text">Home</span>
             </a>
@@ -72,16 +70,40 @@
       </div>
     </div>
     <p id="error-msg"></p>
-    <br>
-    <div class="wrapper">
-      <input class="checkboxinput" type="checkbox" id="grouping-checkbox" />
-      <label for="grouping-checkbox" class="checkboxlabel">Group Digits</label>
+    <div class="checkboxwrapper">
+        <input class="checkboxinput" type="checkbox" id="grouping-checkbox" />
+        <label for="grouping-checkbox" class="checkboxlabel">Group Digits</label>
     </div>
     <br>
     <div class="wrapper">
       <div style="width: 100%;">
-        <label for="complement-inp">2's Complement:</label>
-        <input type="text" id="complement-inp" readonly />
+          <label for="complement-inp">2's Complement:</label>
+          <input type="text" id="complement-inp" readonly />
+      </div>
+    </div>
+    <br>
+    <div class="checkboxwrapper" style="gap: 5em;">
+      <div class="wrapper" >
+        <input class="checkboxinput" type="checkbox" id="oct-checkbox" />
+        <label for="oct-checkbox" class="checkboxlabel">Convert to Octal</label>
+      </div>
+      <div class="wrapper">
+        <input class="checkboxinput" type="checkbox" id="hex-checkbox" />
+        <label for="hex-checkbox" class="checkboxlabel">Convert to Hexadecimal</label>
+      </div>
+    </div>
+    <br>
+    <div class="wrapper">
+      <div style="width: 100%;">
+          <label for="oct-inp">Octal:</label>
+          <input type="text" id="oct-inp" readonly />
+      </div>
+    </div>
+    <br>
+    <div class="wrapper">
+      <div style="width: 100%;">
+          <label for="hex-inp">Hexadecimal:</label>
+          <input type="text" id="hex-inp" readonly />
       </div>
     </div>
 </div>
