@@ -144,6 +144,16 @@ header .image-text .profession {
   text-decoration: none;
   transition: var(--tran-03);
 }
+
+.sidebar li.active a {
+  background-color: var(--primary-color);
+}
+
+.sidebar li.active a .icon,
+.sidebar li.active a .text {
+  color: var(--sidebar-color);
+}
+
 .sidebar li a:hover {
   background-color: var(--primary-color);
 }
